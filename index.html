@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@800&display=swap" rel="stylesheet">
+    <title>Countries API</title>
+  </head>
+  <body>
+    <main-header></main-header>
+    <div class="content">
+      <div class="filterElements">
+        <input name="nameFilter" class="nameFilter" placeholder="Search for a country...">
+        <select name="regions" class="regions">
+            <option value="all" selected>Filter by Regions</option>
+            <option value="region/africa">Africa</option>
+            <option value="region/america">America</option>
+            <option value="region/asia">Asia</option>
+            <option value="region/europe">Europe</option>
+            <option value="region/oceania">Oceania</option>
+        </select>
+      </div>
+    </div>
+    <script type="module" src="js/fetchData.js"></script>
+    <script src="js/header.js"></script>
+    <script type="module" src="js/script.js"></script>
+    <script type="module" src="js/darkMode.js"></script>
+  </body>
+</html>

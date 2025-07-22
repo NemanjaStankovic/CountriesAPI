@@ -1,0 +1,307 @@
+@font-face {
+  font-family: NunitoSans;
+  src: url(https://fonts.google.com/specimen/Nunito+Sans);
+}
+
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.content {
+    margin:8px
+}
+
+div {
+    /* font-family: 'Nunito Sans', sans-serif;    */
+}
+
+.nunitoSansFont{
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.header {
+    height: 10vh;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+    padding-inline: calc(8px + 3vw);
+    align-items: center;
+}
+
+.headerText {
+    font-size: 2rem;
+}
+
+.filterElements {
+    display: flex;
+    justify-content: space-between;
+    /* padding-inline: ; */
+    padding-inline:3vw;
+    padding-block: 1.5vw;
+    /* padding-block: ; */
+}
+
+.nameFilter{
+    background-position: 10px 10px;
+    border: 2px solid white;
+    font-size: 1rem;
+    background-image: url('images/images.svg');
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-left:40px;
+    padding-block: 12px;
+    border-radius: 4px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.regions{
+    border: 2px solid white;
+    border-radius: 4px;
+    font-size: 1rem;
+    padding: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card{
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    /* width: 20vw; */
+    width: 100%;
+    height:25vw;
+    word-break: break-word;
+    overflow: hidden;
+}
+
+.countryView{
+    display:grid;
+    grid-template-columns:  repeat(4, 1fr);
+    background-color: hsl(0, 0%, 99%);
+    padding-inline: 3vw;
+    gap:3vw;
+}
+
+.imageHomeView{
+   width: 100%; 
+   height: 50%;
+   object-fit: cover;
+   border-top-left-radius: 4px;
+   border-top-right-radius: 4px;
+}
+
+.imageDetailsView{
+    width: 100%;
+    height: 30vw;
+    object-fit: cover;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+
+}
+
+.textHomeView{
+    padding-inline: 5%;
+    color:hsl(200, 15%, 8%);
+    height:50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.countryDetails div{
+    font-size: 1vw;
+    padding-block: 0px;
+    color:hsl(200, 15%, 8%);
+}
+
+.goBackButton{
+    font-size: 1rem;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border: 2px solid white;
+    border-radius: 4px;
+    background-color: white;
+    background-image: url('images/arrow-left-line.svg');
+    background-position: 1vw;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-inline:3vw;
+    margin-block: 1.5vw;
+    padding-left: calc(40px + 1vw);
+    padding-right: 1vw;
+    padding-block: 12px;
+}
+
+.countryDetailsColumns div{
+    margin-bottom: 10px;
+}
+
+.countryDetailsView{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2vw;
+}
+
+.detailsPageAllInfo{
+    display:grid;
+    grid-template-columns:  repeat(2, 1fr);
+    align-items: center;
+    margin-inline:3vw;
+    margin-block: 1.5vw;
+    gap:3vw;
+}
+
+.detailsCountryName{
+    font-size: 2rem;
+    margin-bottom: 1.5vw;
+}
+
+.countryDetailsViewColumns{
+    display: flex;
+
+}
+
+.countryDetailsColumns{
+    width:100%;
+}
+
+.countryDetailsBorders{
+    margin-top: 1.5vw;
+}
+
+.borderCountryButton{
+    font-size: 1rem;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border: 2px solid white;
+    border-radius: 4px;
+    background-color: white;
+    margin-inline: 0.5vw;
+    margin-block: 0.5vw;
+    padding-inline: 1vw;
+}
+
+.toggleDarkMode{
+    font-size: 1rem;
+    border: none;
+    background-color: white;
+    background-image: url('images/sunny-sharp.svg');
+    background-position: 10px 10px;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    margin-block: 1.5vw;
+    padding-left: 40px;
+    padding-right: 1vw;
+    padding-block: 12px;
+}
+
+.textHomeView div{
+    padding-block: 10px;
+    font-size: 1.2vw;
+}
+
+@media (max-width:1280px){
+    .countryView{
+        grid-template-columns:  repeat(3, 1fr);
+    }
+    .card{
+        height:35vw;
+    }
+    .textHomeView div{
+        font-size: 2vw;
+    }
+}
+
+@media (max-width:850px){
+    .countryView{
+        grid-template-columns:  repeat(2, 1fr);
+    }
+    .card{
+        height:50vw;
+    }
+    .countryDetailsViewColumns{
+        flex-wrap: wrap;
+    }
+    .imageDetailsView{
+        height: 70vw;
+    }
+    .detailsPageAllInfo{
+        grid-template-columns: 1fr;
+    }
+    .textHomeView div{
+        font-size: 2.5vw;
+    }
+}
+
+@media (max-width:500px){
+    .card{
+        height:90vw;
+    }
+    .detailsPageAllInfo{
+        grid-template-columns: 1fr;
+    }
+    .imageDetailsView{
+        height: 70vw;
+    }
+    .nameFilter{
+        max-width: 40px;
+    }
+    .countryView{
+        grid-template-columns:  1fr;
+    }
+     .textHomeView div{
+        font-size: 4vw;
+    }
+}
+
+.dark-mode{
+    background-color: hsl(207, 26%, 17%);
+    color:hsl(0, 100%, 100%);
+}
+
+.dark-mode .countryView{
+    background-color: hsl(207, 26%, 17%);
+}
+
+.dark-mode .card{
+    background-color: hsl(209, 23%, 22%);
+}
+
+.dark-mode .textHomeView, .dark-mode .countryDetails div{
+    color:hsl(0, 100%, 100%);
+}
+
+.dark-mode .borderCountryButton, .dark-mode .regions{
+    background-color: hsl(209, 23%, 22%);
+    border-color: hsl(209, 23%, 22%);
+    color:hsl(0, 100%, 100%);
+}
+
+.dark-mode input::placeholder{
+  color: hsl(0, 100%, 100%);
+}
+
+.dark-mode .goBackButton{
+    background-color: hsl(209, 23%, 22%);
+    border-color: hsl(209, 23%, 22%);
+    color:hsl(0, 100%, 100%);
+    background-image: url('images/arrow-left-line-dark.svg');
+}
+
+.dark-mode .nameFilter{
+    background-image: url('images/images-dark.svg');
+    background-color: hsl(209, 23%, 22%);
+    border-color: hsl(209, 23%, 22%);
+    color:hsl(0, 100%, 100%);
+}
+
+.dark-mode .toggleDarkMode{
+    background-color: hsl(207, 26%, 17%);;
+    color:hsl(0, 100%, 100%);
+    background-image: url('images/moon-sharp.svg');
+    margin-block: 1.5vw;
+    padding-left: 40px;
+    padding-right: 1vw;
+    padding-block: 12px;
+}
+
