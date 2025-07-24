@@ -32,15 +32,14 @@ div {
 
 .headerText {
     font-size: 2rem;
+    cursor: pointer;
 }
 
 .filterElements {
     display: flex;
     justify-content: space-between;
-    /* padding-inline: ; */
     padding-inline:3vw;
     padding-block: 1.5vw;
-    /* padding-block: ; */
 }
 
 .nameFilter{
@@ -48,13 +47,16 @@ div {
     border: 2px solid white;
     font-size: 1rem;
     background-image: url('images/images.svg');
-    background-position: left;
-    background-size: contain;
+    background-position: 10px;
+    background-size: 20px;
     background-repeat: no-repeat;
     padding-left:40px;
     padding-block: 12px;
     border-radius: 4px;
+    width: 500px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    flex-shrink: 1;
+    margin-right: 10px;
 }
 
 .regions{
@@ -69,11 +71,17 @@ div {
     background-color: white;
     border-radius: 4px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    /* width: 20vw; */
     width: 100%;
-    height:25vw;
+    height: 21vw;
     word-break: break-word;
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.card:hover{
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
 }
 
 .countryView{
@@ -94,7 +102,7 @@ div {
 
 .imageDetailsView{
     width: 100%;
-    height: 30vw;
+    height: 23vw;
     object-fit: cover;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 
@@ -170,7 +178,7 @@ div {
     margin-top: 1.5vw;
 }
 
-.borderCountryButton{
+.borderCountryButton, .previousPage, .nextPage, .pageNumber{
     font-size: 1rem;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     border: 2px solid white;
@@ -198,6 +206,47 @@ div {
 .textHomeView div{
     padding-block: 10px;
     font-size: 1.2vw;
+}
+
+.pageController{
+    display: flex;
+    justify-content: center;
+    margin-block: 50px;
+}
+
+.pageNumber{
+    width: 25px;
+    height: 25px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    font-weight: bold;
+    margin-inline: 10px;
+}
+
+.previousPage{
+    background-image: url('images/page-back.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    padding: 0px;
+}
+
+.nextPage{
+    background-image: url('images/page-forward.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    padding: 0px;
+
+}
+
+input::placeholder {
+  opacity: 0.5;
+  font-size: 12px;
 }
 
 @media (max-width:1280px){
@@ -243,15 +292,28 @@ div {
     .imageDetailsView{
         height: 70vw;
     }
-    .nameFilter{
-        max-width: 40px;
-    }
     .countryView{
         grid-template-columns:  1fr;
     }
      .textHomeView div{
         font-size: 4vw;
     }
+    .headerText{
+        font-size: 6vw;
+    }
+    .toggleDarkMode{
+        font-size: 0.8rem;
+        background-position: 20px 10px;
+        background-size: 15px;
+    }
+    .filterElements{
+        padding-block: 20px;
+        flex-wrap: wrap;
+    }
+    .regions{
+        margin-top: 20px;
+    }
+
 }
 
 .dark-mode{
@@ -271,7 +333,7 @@ div {
     color:hsl(0, 100%, 100%);
 }
 
-.dark-mode .borderCountryButton, .dark-mode .regions{
+.dark-mode .borderCountryButton, .dark-mode .regions, .dark-mode .previousPage, .dark-mode .nextPage, .dark-mode .pageNumber{
     background-color: hsl(209, 23%, 22%);
     border-color: hsl(209, 23%, 22%);
     color:hsl(0, 100%, 100%);
@@ -303,5 +365,13 @@ div {
     padding-left: 40px;
     padding-right: 1vw;
     padding-block: 12px;
+}
+
+.dark-mode .previousPage{
+    background-image: url('images/page-back-dark.svg');
+}
+
+.dark-mode .nextPage{
+    background-image: url('images/page-forward-dark.svg');
 }
 

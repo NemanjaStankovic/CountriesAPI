@@ -1,6 +1,9 @@
 import { checkDarkMode, toggleDarkMode } from "./darkMode.js";
 const url = new URL(window.location.href).searchParams;
 const content = document.getElementsByClassName("content")[0];
+const headerText = document.getElementsByClassName("headerText")[0];
+let counter = 0;
+
 
 function getCountryDetails(){
     let param = url.get("name");    
@@ -16,7 +19,6 @@ function getCountryDetails(){
             urlParams=`alpha/${url.get(`alpha`)}`
         }
     }
-
     fetch(`https://restcountries.com/v3.1/${urlParams}?fullText=true`)
     .then(response => {
             if(!response.ok) {
@@ -65,68 +67,84 @@ function renderDetailedView(data){
     const countryDetailsRightColumn = document.createElement("div");
     countryDetailsRightColumn.classList.add("countryDetailsColumns");
 
-
-    const countryNativeNameLabel = document.createElement("div");
+    const countryNativeName = document.createElement("div");
+    const countryNativeNameLabel = document.createElement("strong");
     countryNativeNameLabel.innerText = "Native Name: "
-    const countryNativeName = document.createElement("span");
-    countryNativeName.textContent = data.name.nativeName[Object.keys(data.name.nativeName)[0]].official;
-    countryNativeNameLabel.appendChild(countryNativeName);
+    const countryNativeNameValue = document.createElement("span");
+    countryNativeNameValue.textContent = data.name.nativeName[Object.keys(data.name.nativeName)[0]].official;
+    countryNativeName.appendChild(countryNativeNameLabel);
+    countryNativeName.appendChild(countryNativeNameValue);
 
-    const countryPopulationLabel = document.createElement("div");
+    const countryPopulation = document.createElement("div");
+    const countryPopulationLabel = document.createElement("strong");
     countryPopulationLabel.innerText = "Population: ";
-    const countryPopulation = document.createElement("span");
-    countryPopulation.textContent = nfObject.format(data.population);
-    countryPopulationLabel.appendChild(countryPopulation);
+    const countryPopulationValue = document.createElement("span");
+    countryPopulationValue.textContent = nfObject.format(data.population);
+    countryPopulation.appendChild(countryPopulationLabel);
+    countryPopulation.appendChild(countryPopulationValue);
+    // countryPopulationLabel.appendChild(countryPopulation);
 
-    const countryRegionLabel = document.createElement("div");
+    const countryRegion = document.createElement("div");
+    const countryRegionLabel = document.createElement("strong");
     countryRegionLabel.innerText = "Region: ";
-    const countryRegion = document.createElement("span");
-    countryRegion.textContent = data.region;
-    countryRegionLabel.appendChild(countryRegion);
+    const countryRegionValue = document.createElement("span");
+    countryRegionValue.textContent = data.region;
+    countryRegion.appendChild(countryRegionLabel);
+    countryRegion.appendChild(countryRegionValue);
+    // countryRegionLabel.appendChild(countryRegion);
 
-
-    const countrySubregionLabel = document.createElement("div");
+    const countrySubregion = document.createElement("div");
+    const countrySubregionLabel = document.createElement("strong");
     countrySubregionLabel.innerText = "Sub Region: ";
-    const countrySubregion= document.createElement("span");
-    countrySubregion.textContent = data.subregion;
-    countrySubregionLabel.appendChild(countrySubregion);
+    const countrySubregionValue= document.createElement("span");
+    countrySubregionValue.textContent = data.subregion;
+    countrySubregion.appendChild(countrySubregionLabel);
+    countrySubregion.appendChild(countrySubregionValue);
+    // countrySubregionLabel.appendChild(countrySubregion);
 
-
-    const countryCapitalLabel = document.createElement("div");
+    const countryCapital = document.createElement("div");
+    const countryCapitalLabel = document.createElement("strong");
     countryCapitalLabel.innerText = "Capital: ";
-    const countryCapital = document.createElement("span");
-    countryCapital.textContent = data.capital;
-    countryCapitalLabel.appendChild(countryCapital);
+    const countryCapitalValue = document.createElement("span");
+    countryCapitalValue.textContent = data.capital;
+    countryCapital.appendChild(countryCapitalLabel);
+    countryCapital.appendChild(countryCapitalValue);
 
-    const countryTopLvlDomLabel = document.createElement("div");
+    const countryTopLvlDom = document.createElement("div");
+    const countryTopLvlDomLabel = document.createElement("strong");
     countryTopLvlDomLabel.innerText = "Top Level Domain: ";
-    const countryTopLvlDom = document.createElement("span");
-    countryTopLvlDom.textContent = data.tld;
-    countryTopLvlDomLabel.appendChild(countryTopLvlDom);
+    const countryTopLvlDomValue = document.createElement("span");
+    countryTopLvlDomValue.textContent = data.tld;
+    countryTopLvlDom.appendChild(countryTopLvlDomLabel);
+    countryTopLvlDom.appendChild(countryTopLvlDomValue);
 
-    const countryCurrenciesLabel = document.createElement("div");
+    const countryCurrencies = document.createElement("div");
+    const countryCurrenciesLabel = document.createElement("strong");
     countryCurrenciesLabel.innerText = "Currencies: ";
-    const countryCurrencies = document.createElement("span");
-    countryCurrencies.textContent = data.currencies[Object.keys(data.currencies)[0]].name;
-    countryCurrenciesLabel.appendChild(countryCurrencies);
+    const countryCurrenciesValue = document.createElement("span");
+    countryCurrenciesValue.textContent = data.currencies[Object.keys(data.currencies)[0]].name;
+    countryCurrencies.appendChild(countryCurrenciesLabel);
+    countryCurrencies.appendChild(countryCurrenciesValue);
 
-    const countryLanguagesLabel = document.createElement("div");
+    const countryLanguages = document.createElement("div");
+    const countryLanguagesLabel = document.createElement("strong");
     countryLanguagesLabel.innerText = "Languages: ";
-    const countryLanguages = document.createElement("span");
-    countryLanguages.textContent = data.languages[Object.keys(data.languages)[0]];
-    countryLanguagesLabel.appendChild(countryLanguages);
+    const countryLanguagesValue = document.createElement("span");
+    countryLanguagesValue.textContent = data.languages[Object.keys(data.languages)[0]];
+    countryLanguages.appendChild(countryLanguagesLabel);
+    countryLanguages.appendChild(countryLanguagesValue);
 
     detailedView.appendChild(countryImg);
 
     countryDetailsView.appendChild(countryName);
-    countryDetailsLeftColumn.appendChild(countryNativeNameLabel);
-    countryDetailsLeftColumn.appendChild(countryPopulationLabel);
-    countryDetailsLeftColumn.appendChild(countryRegionLabel);
-    countryDetailsLeftColumn.appendChild(countrySubregionLabel);
-    countryDetailsLeftColumn.appendChild(countryCapitalLabel);
-    countryDetailsRightColumn.appendChild(countryTopLvlDomLabel);
-    countryDetailsRightColumn.appendChild(countryCurrenciesLabel);
-    countryDetailsRightColumn.appendChild(countryLanguagesLabel);
+    countryDetailsLeftColumn.appendChild(countryNativeName);
+    countryDetailsLeftColumn.appendChild(countryPopulation);
+    countryDetailsLeftColumn.appendChild(countryRegion);
+    countryDetailsLeftColumn.appendChild(countrySubregion);
+    countryDetailsLeftColumn.appendChild(countryCapital);
+    countryDetailsRightColumn.appendChild(countryTopLvlDom);
+    countryDetailsRightColumn.appendChild(countryCurrencies);
+    countryDetailsRightColumn.appendChild(countryLanguages);
 
     countryDetailsViewColumns.appendChild(countryDetailsLeftColumn);
     countryDetailsViewColumns.appendChild(countryDetailsRightColumn);
@@ -140,9 +158,10 @@ function renderDetailedView(data){
     if(countryBorders){
         let countryNames = [];
         const countryBordersLabel = document.createElement("div");
-        countryBordersLabel.innerText = "Border Countries: ";
+        const countryBordersText = document.createElement("strong");
+        countryBordersText.innerText = "Border Countries: ";
+        countryBordersLabel.appendChild(countryBordersText);
         countryDetailsBorders.appendChild(countryBordersLabel);
-        
         const fetchPromises = countryBorders.map((border)=>
             fetch(`https://restcountries.com/v3.1/alpha/${border}?fields=name`)
             .then(response => {
@@ -158,7 +177,6 @@ function renderDetailedView(data){
         );
 
         Promise.all(fetchPromises).then(countryNames => {
-            console.log(countryNames);
             countryBorders.map((border, index)=>{
             const borderButton = document.createElement(`button`);
             
@@ -176,3 +194,6 @@ function renderDetailedView(data){
 
 getCountryDetails();
 document.addEventListener("DOMContentLoaded", checkDarkMode);
+headerText.addEventListener("click", ()=>{
+    window.location.href = 'index.html?'
+});
