@@ -1,7 +1,7 @@
 import { checkDarkMode, toggleDarkMode } from "./darkMode.js";
 const url = new URL(window.location.href).searchParams;
-const content = document.getElementsByClassName("content")[0];
-const headerText = document.getElementsByClassName("headerText")[0];
+const content = document.querySelector(".content");
+const headerText = document.querySelector(".headerText");
 let counter = 0;
 
 

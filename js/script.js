@@ -1,10 +1,11 @@
 import {toggleDarkMode, checkDarkMode} from './darkMode.js';
 const countyView = document.createElement("div");
-const regionSelect = document.getElementsByClassName("regions")[0];
-const nameFilter = document.getElementsByClassName("nameFilter")[0];
-const content = document.getElementsByClassName("content")[0];
-const toggleDarkModeButton = document.getElementsByClassName("toggleDarkMode")[0];
-const headerText = document.getElementsByClassName("headerText")[0];
+const regionSelect = document.querySelector(".regions");
+const nameFilter = document.querySelector(".nameFilter");
+const content = document.querySelector(".content");
+const toggleDarkModeButton = document.querySelector(".toggleDarkMode");
+const headerText = document.querySelector(".headerText");
+
 var numberOfPages=0;
 var countries = [];
 var filteredData = [];
@@ -65,12 +66,12 @@ function renderCountries(value){
         <div class="pageNumber">${page}</div>
         <button class="nextPage"></button>`;
     pageController.classList.add("pageController");
-    const prevButton = pageController.getElementsByClassName("previousPage")[0];
-    const nextButton = pageController.getElementsByClassName("nextPage")[0];
+    const prevButton = pageController.querySelector(".previousPage");
+    const nextButton = pageController.querySelector(".nextPage");
     prevButton.onclick = () => renderCountries(-1);
     nextButton.onclick = () => renderCountries(1);
 
-    const pageControllerExists = document.getElementsByClassName("pageController")[0];
+    const pageControllerExists = document.querySelector(".pageController");
     if(pageControllerExists)
     {
         pageControllerExists.remove();
@@ -84,14 +85,15 @@ function changePageNumber(value){
     {
         page=1;
     }
-    if(page+value>0 && page+value<=numberOfPages && value!=0)
+    const nextPage = page + value;
+    if(nextPage>0 && nextPage<=numberOfPages && value!=0)
     {
-        page+=value;
+        page=nextPage;
     }
 }
 
 function changePageNumberUI(){
-    let buttonToChange = document.getElementsByClassName("previousPage")[0];
+    let buttonToChange = document.querySelector(".previousPage");
     if(page==1)
     {
         buttonToChange.disabled=true;
@@ -102,7 +104,7 @@ function changePageNumberUI(){
         buttonToChange.disabled=false;
         buttonToChange.style.visibility='visible';
     }
-    buttonToChange = document.getElementsByClassName("nextPage")[0];
+    buttonToChange = document.querySelector(".nextPage");
     if(page==numberOfPages || numberOfPages==0)
     {
         buttonToChange.disabled =true;
@@ -119,7 +121,7 @@ function changePageNumberUI(){
         const pageNumber = document.querySelector(".pageNumber");
         pageNumber.style.visibility='hidden';
     }
-    document.getElementsByClassName("pageNumber")[0].textContent=page;
+    document.querySelector(".pageNumber").textContent=page;
 }
 
 function returnToHomePage(){

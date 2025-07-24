@@ -1,4 +1,4 @@
-const toggleDarkModeButton = document.getElementsByClassName("toggleDarkMode")[0];
+const toggleDarkModeButton = document.querySelector(".toggleDarkMode");
 
 export function toggleDarkMode(){
     document.body.classList.toggle("dark-mode");
