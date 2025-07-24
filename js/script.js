@@ -5,6 +5,7 @@ const nameFilter = document.getElementsByClassName("nameFilter")[0];
 const content = document.getElementsByClassName("content")[0];
 const toggleDarkModeButton = document.getElementsByClassName("toggleDarkMode")[0];
 const headerText = document.getElementsByClassName("headerText")[0];
+var numberOfPages=0;
 var countries = [];
 var filteredData = [];
 var page = 1;
@@ -20,21 +21,23 @@ async function fetchData(){
     })
     .then(data => {
         countries=data;
-        changePageNumber(0);
+        renderCountries(0);
     })
     .catch(error => {
         console.error(error);
     })
     
 }
-function renderCountries(){
+function renderCountries(value){
     const nameFilterValue = nameFilter.value.toLowerCase();
     countyView.classList.add("countryView");
-    const nfObject = new Intl.NumberFormat('en-US')
-    let i = 24*(page-1);
+    const nfObject = new Intl.NumberFormat('en-US')    
     countyView.innerHTML="";
     filteredData = countries.filter(country => country.name.common.toLowerCase().includes(nameFilterValue));
-    console.log(filteredData, nameFilterValue);
+    numberOfPages = Math.ceil(filteredData.length/24);
+    changePageNumber(value);
+    let i = 24*(page-1);
+
     while(i<filteredData.length && i<24*page)
     {
         let country = filteredData[i];
@@ -56,9 +59,7 @@ function renderCountries(){
     }
     content.appendChild(countyView);
     
-    const numberOfPages = Math.ceil(filteredData.length/24);
     const pageController = document.createElement("div");
-
     pageController.innerHTML=`
         <button class="previousPage" disabled></button>
         <div class="pageNumber">${page}</div>
@@ -66,8 +67,8 @@ function renderCountries(){
     pageController.classList.add("pageController");
     const prevButton = pageController.getElementsByClassName("previousPage")[0];
     const nextButton = pageController.getElementsByClassName("nextPage")[0];
-    prevButton.onclick = () => changePageNumber(-1);
-    nextButton.onclick = () => changePageNumber(1);
+    prevButton.onclick = () => renderCountries(-1);
+    nextButton.onclick = () => renderCountries(1);
 
     const pageControllerExists = document.getElementsByClassName("pageController")[0];
     if(pageControllerExists)
@@ -75,21 +76,21 @@ function renderCountries(){
         pageControllerExists.remove();
     }
     content.appendChild(pageController);
+    changePageNumberUI();
 }
 
 function changePageNumber(value){
-    const numberOfPages = Math.ceil(filteredData.length/24);       
-
     if(value==0)
     {
         page=1;
-        renderCountries();
     }
     if(page+value>0 && page+value<=numberOfPages && value!=0)
     {
         page+=value;
-        renderCountries();
     }
+}
+
+function changePageNumberUI(){
     let buttonToChange = document.getElementsByClassName("previousPage")[0];
     if(page==1)
     {
@@ -102,7 +103,7 @@ function changePageNumber(value){
         buttonToChange.style.visibility='visible';
     }
     buttonToChange = document.getElementsByClassName("nextPage")[0];
-    if(page==numberOfPages)
+    if(page==numberOfPages || numberOfPages==0)
     {
         buttonToChange.disabled =true;
         buttonToChange.style.visibility='hidden';
@@ -113,7 +114,7 @@ function changePageNumber(value){
        buttonToChange.style.visibility='visible';
 
     }
-    if(page==1 && numberOfPages==1)
+    if(page==1 && numberOfPages<=1)
     {
         const pageNumber = document.querySelector(".pageNumber");
         pageNumber.style.visibility='hidden';

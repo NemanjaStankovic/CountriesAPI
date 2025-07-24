@@ -13,10 +13,6 @@
     margin:8px
 }
 
-div {
-    /* font-family: 'Nunito Sans', sans-serif;    */
-}
-
 .nunitoSansFont{
     font-family: 'Nunito Sans', sans-serif;
 }
@@ -102,8 +98,7 @@ div {
 
 .imageDetailsView{
     width: 100%;
-    height: 23vw;
-    object-fit: cover;
+    object-fit: center;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 
 }
@@ -140,8 +135,14 @@ div {
     padding-block: 12px;
 }
 
+.countryDetailsColumns{
+    width:100%;
+    margin-right: 10px;
+}
+
 .countryDetailsColumns div{
     margin-bottom: 10px;
+    font-size: 1.5rem;
 }
 
 .countryDetailsView{
@@ -161,17 +162,13 @@ div {
 }
 
 .detailsCountryName{
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 1.5vw;
 }
 
 .countryDetailsViewColumns{
     display: flex;
 
-}
-
-.countryDetailsColumns{
-    width:100%;
 }
 
 .countryDetailsBorders{
@@ -259,6 +256,9 @@ input::placeholder {
     .textHomeView div{
         font-size: 2vw;
     }
+    .countryDetailsViewColumns{
+        flex-wrap: wrap;
+    }
 }
 
 @media (max-width:850px){
@@ -272,7 +272,7 @@ input::placeholder {
         flex-wrap: wrap;
     }
     .imageDetailsView{
-        height: 70vw;
+
     }
     .detailsPageAllInfo{
         grid-template-columns: 1fr;
@@ -289,14 +289,11 @@ input::placeholder {
     .detailsPageAllInfo{
         grid-template-columns: 1fr;
     }
-    .imageDetailsView{
-        height: 70vw;
-    }
     .countryView{
         grid-template-columns:  1fr;
     }
      .textHomeView div{
-        font-size: 4vw;
+        font-size: 1.4rem;
     }
     .headerText{
         font-size: 6vw;
@@ -313,7 +310,6 @@ input::placeholder {
     .regions{
         margin-top: 20px;
     }
-
 }
 
 .dark-mode{
