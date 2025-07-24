@@ -10,6 +10,7 @@
 }
 
 .content {
+    
     margin:8px
 }
 
@@ -72,7 +73,7 @@
     word-break: break-word;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+    cursor: pointer;
 }
 
 .card:hover{
@@ -83,7 +84,6 @@
 .countryView{
     display:grid;
     grid-template-columns:  repeat(4, 1fr);
-    background-color: hsl(0, 0%, 99%);
     padding-inline: 3vw;
     gap:3vw;
 }
@@ -141,7 +141,7 @@
 }
 
 .countryDetailsColumns div{
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-size: 1.5rem;
 }
 
@@ -163,7 +163,7 @@
 
 .detailsCountryName{
     font-size: 3rem;
-    margin-bottom: 1.5vw;
+    margin-bottom: 3vw;
 }
 
 .countryDetailsViewColumns{
@@ -175,6 +175,10 @@
     margin-top: 1.5vw;
 }
 
+.countryDetailsBorders div{
+    font-size: 1.5rem;
+}
+
 .borderCountryButton, .previousPage, .nextPage, .pageNumber{
     font-size: 1rem;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -184,6 +188,7 @@
     margin-inline: 0.5vw;
     margin-block: 0.5vw;
     padding-inline: 1vw;
+    cursor: pointer;
 }
 
 .toggleDarkMode{
@@ -271,14 +276,14 @@ input::placeholder {
     .countryDetailsViewColumns{
         flex-wrap: wrap;
     }
-    .imageDetailsView{
-
-    }
     .detailsPageAllInfo{
         grid-template-columns: 1fr;
     }
     .textHomeView div{
         font-size: 2.5vw;
+    }
+    .detailsCountryName{
+        margin-bottom: 5vw;
     }
 }
 

@@ -1,4 +1,5 @@
 import {toggleDarkMode, checkDarkMode} from './darkMode.js';
+import { getCountriesByRegion } from './fetchData.js';
 const countyView = document.createElement("div");
 const regionSelect = document.querySelector(".regions");
 const nameFilter = document.querySelector(".nameFilter");
@@ -13,21 +14,8 @@ var page = 1;
 
 async function fetchData(){
     const regionFilterValue = regionSelect.value;
-    fetch(`https://restcountries.com/v3.1/${regionFilterValue}?fields=name,population,capital,region,flags`)
-    .then(response => {
-        if(!response.ok) {
-            throw new Error('Failed to fetch data');
-        }
-        return response.json();
-    })
-    .then(data => {
-        countries=data;
-        renderCountries(0);
-    })
-    .catch(error => {
-        console.error(error);
-    })
-    
+    countries= await getCountriesByRegion(regionFilterValue);
+    renderCountries(0);
 }
 function renderCountries(value){
     const nameFilterValue = nameFilter.value.toLowerCase();

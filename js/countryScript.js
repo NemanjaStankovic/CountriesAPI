@@ -1,11 +1,12 @@
-import { checkDarkMode, toggleDarkMode } from "./darkMode.js";
+import { checkDarkMode } from "./darkMode.js";
+import { getBorderCountries, getCountryList } from "./fetchData.js";
 const url = new URL(window.location.href).searchParams;
 const content = document.querySelector(".content");
 const headerText = document.querySelector(".headerText");
 let counter = 0;
 
 
-function getCountryDetails(){
+async function getCountryDetails(){
     let param = url.get("name");    
     let urlParams="";
     if(param)
@@ -17,23 +18,14 @@ function getCountryDetails(){
         if(url.get("alpha"))
         {
             urlParams=`alpha/${url.get(`alpha`)}`
+            console.log(urlParams);
         }
     }
-    fetch(`https://restcountries.com/v3.1/${urlParams}?fullText=true`)
-    .then(response => {
-            if(!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            return response.json();
-        })
-        .then(data => {
-            renderBackButton();
-            renderDetailedView(data[0]);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    const data = await getCountryList(urlParams);
+    renderBackButton();
+    renderDetailedView(data[0]);
 }
+
 
 function renderBackButton(){
     const backButton = document.createElement(`button`);
@@ -42,7 +34,7 @@ function renderBackButton(){
     backButton.classList.add("goBackButton");
     content.appendChild(backButton);
 }
-function renderDetailedView(data){
+async function renderDetailedView(data){
     const nfObject = new Intl.NumberFormat('en-US');
     const detailedView = document.createElement("div");
     detailedView.classList.add("detailsPageAllInfo");
@@ -162,29 +154,15 @@ function renderDetailedView(data){
         countryBordersText.innerText = "Border Countries: ";
         countryBordersLabel.appendChild(countryBordersText);
         countryDetailsBorders.appendChild(countryBordersLabel);
-        const fetchPromises = countryBorders.map((border)=>
-            fetch(`https://restcountries.com/v3.1/alpha/${border}?fields=name`)
-            .then(response => {
-                if(!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                return response.json();
-            })
-            .then(data => data.name.common)
-            .catch(error => {
-                console.error(error);
-            })
-        );
-
-        Promise.all(fetchPromises).then(countryNames => {
-            countryBorders.map((border, index)=>{
-            const borderButton = document.createElement(`button`);
-            
-            borderButton.classList.add("borderCountryButton");
-            borderButton.textContent=countryNames[index];
-            borderButton.onclick=()=>{window.location.href = `country.html?alpha=${border}`}
-            countryDetailsBorders.appendChild(borderButton);
-            })
+        
+        countryNames = await getBorderCountries(countryBorders);
+        countryNames.map((border, index)=>{
+        const borderButton = document.createElement(`button`);
+        
+        borderButton.classList.add("borderCountryButton");
+        borderButton.textContent=border;
+        borderButton.onclick=()=>{window.location.href = `country.html?alpha=${countryBorders[index]}`}
+        countryDetailsBorders.appendChild(borderButton);
         })
     }
     countryDetailsView.appendChild(countryDetailsBorders);
