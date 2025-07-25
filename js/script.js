@@ -16,42 +16,48 @@ var page = 1;
 async function fetchData(){
     const regionFilterValue = regionSelect.value;
     countries= await getCountriesByRegion(regionFilterValue);
-    renderCountries(0);
+    renderCountries("resetPage");
 }
 function renderCountries(value){
+    console.log(value);
     const nameFilterValue = nameFilter.value.toLowerCase();
     countyView.classList.add("countryView");
-    const nfObject = new Intl.NumberFormat('en-US')    
     countyView.innerHTML="";
-    if(value==0)
+    if(value=="resetPage")
     {
         filteredData = countries.filter(country => country.name.common.toLowerCase().includes(nameFilterValue));
         sortFilteredArray();
     }
-    if(value==-2)
+    if(value=="sortData")
     {
         sortFilteredArray();
     }
     numberOfPages = Math.ceil(filteredData.length/24);
-    value==-2?changePageNumber(0):changePageNumber(value);
+    changePageNumber(value);
+    
+    renderCountryView();
+}
+function renderCountryView()
+{
     let i = 24*(page-1);
-
+    console.log(i);
+    const nfObject = new Intl.NumberFormat('en-US');
     while(i<filteredData.length && i<24*page)
     {
         let country = filteredData[i];
         const countryCard = document.createElement("div");
         countryCard.classList.add("card");
         countryCard.innerHTML=`
-            <img class="imageHomeView" src="${country.flags.svg}" alt="${country.flags.alt}">
+            <img class="imageHomeView" src="${country?.flags?.svg}" alt="${country?.flags?.alt}">
             <div class="textHomeView">
-                <div class="nunitoSansFont">${country.name.common}</div>
+                <div class="nunitoSansFont">${country?.name?.common}</div>
                 <div class="countryDetails">
-                    <div style="padding-block:0px"><strong>Population: </strong>${nfObject.format(country.population)}</div>
-                    <div style="padding-block:0px"><strong>Region: </strong>${country.region}</div>
-                    <div style="padding-block:0px"><strong>Capital: </strong>${country.capital}</div>
+                    <div style="padding-block:0px"><strong>Population: </strong>${nfObject.format(country?.population)}</div>
+                    <div style="padding-block:0px"><strong>Region: </strong>${country?.region}</div>
+                    <div style="padding-block:0px"><strong>Capital: </strong>${country?.capital}</div>
                 </div>
-            </div>`
-        countryCard.addEventListener("click", ()=>{window.location.href = `country.html?name=${country.name.official}`});
+            </div>`|| ``;
+        countryCard.addEventListener("click", ()=>{window.location.href = `country.html?name=${country?.name?.official}`});
         countyView.appendChild(countryCard);
         i++;
     }
@@ -65,8 +71,8 @@ function renderCountries(value){
     pageController.classList.add("pageController");
     const prevButton = pageController.querySelector(".previousPage");
     const nextButton = pageController.querySelector(".nextPage");
-    prevButton.onclick = () => renderCountries(-1);
-    nextButton.onclick = () => renderCountries(1);
+    prevButton.onclick = () => renderCountries("prevPage");
+    nextButton.onclick = () => renderCountries("nextPage");
 
     const pageControllerExists = document.querySelector(".pageController");
     if(pageControllerExists)
@@ -78,12 +84,20 @@ function renderCountries(value){
 }
 
 function changePageNumber(value){
-    if(value==0)
+    var nextPage=0;
+    if(value=="resetPage" || value=="sortData")
     {
         page=1;
     }
-    const nextPage = page + value;
-    if(nextPage>0 && nextPage<=numberOfPages && value!=0)
+    if(value=="nextPage")
+    {
+        nextPage = page + 1;
+    }
+    if(value=="prevPage")
+    {
+        nextPage = page - 1;
+    }
+    if(nextPage>0 && nextPage<=numberOfPages && value!="resetPage" && value!="sortData")
     {
         page=nextPage;
     }
@@ -128,9 +142,9 @@ function returnToHomePage(){
     fetchData();
 }
 
-function sort(){
-    renderCountries(-2);
-}
+// function sort(){
+//     renderCountries("sortData");
+// }
 function sortFilteredArray(){
     const sortBy = sortSelect.value;
     switch(sortBy){
@@ -149,4 +163,4 @@ nameFilter.addEventListener("input", fetchData);
 toggleDarkModeButton.addEventListener("click", toggleDarkMode);
 document.addEventListener("DOMContentLoaded", checkDarkMode);
 headerText.addEventListener("click", returnToHomePage);
-sortSelect.addEventListener("change", sort);
+sortSelect.addEventListener("change", ()=>renderCountries("sortData"));

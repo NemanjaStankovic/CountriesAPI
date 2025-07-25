@@ -54,6 +54,7 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     flex-shrink: 1;
     margin-right: 10px;
+    min-width: 20px;
 }
 
 .regions{

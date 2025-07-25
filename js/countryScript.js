@@ -62,7 +62,7 @@ async function renderDetailedView(data){
     const countryNativeNameLabel = document.createElement("strong");
     countryNativeNameLabel.innerText = "Native Name: "
     const countryNativeNameValue = document.createElement("span");
-    countryNativeNameValue.textContent = data.name.nativeName[Object.keys(data.name.nativeName)[0]].official;
+    countryNativeNameValue.textContent = data?.name?.nativeName?.[Object.keys(data.name?.nativeName)[0]].official ?? "N/A";
     countryNativeName.appendChild(countryNativeNameLabel);
     countryNativeName.appendChild(countryNativeNameValue);
 
@@ -70,34 +70,31 @@ async function renderDetailedView(data){
     const countryPopulationLabel = document.createElement("strong");
     countryPopulationLabel.innerText = "Population: ";
     const countryPopulationValue = document.createElement("span");
-    countryPopulationValue.textContent = nfObject.format(data.population);
+    countryPopulationValue.textContent = nfObject.format(data?.population) ?? "N/A";
     countryPopulation.appendChild(countryPopulationLabel);
     countryPopulation.appendChild(countryPopulationValue);
-    // countryPopulationLabel.appendChild(countryPopulation);
 
     const countryRegion = document.createElement("div");
     const countryRegionLabel = document.createElement("strong");
     countryRegionLabel.innerText = "Region: ";
     const countryRegionValue = document.createElement("span");
-    countryRegionValue.textContent = data.region;
+    countryRegionValue.textContent = data?.region ?? "N/A";
     countryRegion.appendChild(countryRegionLabel);
     countryRegion.appendChild(countryRegionValue);
-    // countryRegionLabel.appendChild(countryRegion);
 
     const countrySubregion = document.createElement("div");
     const countrySubregionLabel = document.createElement("strong");
     countrySubregionLabel.innerText = "Sub Region: ";
     const countrySubregionValue= document.createElement("span");
-    countrySubregionValue.textContent = data.subregion;
+    countrySubregionValue.textContent = data?.subregion ?? "N/A";
     countrySubregion.appendChild(countrySubregionLabel);
     countrySubregion.appendChild(countrySubregionValue);
-    // countrySubregionLabel.appendChild(countrySubregion);
 
     const countryCapital = document.createElement("div");
     const countryCapitalLabel = document.createElement("strong");
     countryCapitalLabel.innerText = "Capital: ";
     const countryCapitalValue = document.createElement("span");
-    countryCapitalValue.textContent = data.capital;
+    countryCapitalValue.textContent = data?.capital ?? "N/A";
     countryCapital.appendChild(countryCapitalLabel);
     countryCapital.appendChild(countryCapitalValue);
 
@@ -105,7 +102,9 @@ async function renderDetailedView(data){
     const countryTopLvlDomLabel = document.createElement("strong");
     countryTopLvlDomLabel.innerText = "Top Level Domain: ";
     const countryTopLvlDomValue = document.createElement("span");
-    countryTopLvlDomValue.textContent = data.tld;
+    const tldList = [];
+    Object.keys(data.tld||{}).forEach(key => {  tldList.push(data.tld[key])});
+    countryTopLvlDomValue.textContent = tldList.length?tldList.join(', '):"N/A";
     countryTopLvlDom.appendChild(countryTopLvlDomLabel);
     countryTopLvlDom.appendChild(countryTopLvlDomValue);
 
@@ -113,7 +112,9 @@ async function renderDetailedView(data){
     const countryCurrenciesLabel = document.createElement("strong");
     countryCurrenciesLabel.innerText = "Currencies: ";
     const countryCurrenciesValue = document.createElement("span");
-    countryCurrenciesValue.textContent = data.currencies[Object.keys(data.currencies)[0]].name;
+    const currenciesList = [];
+    Object.keys(data.currencies||{}).forEach(key => {  currenciesList.push(data?.currencies[key]?.symbol)});
+    countryCurrenciesValue.textContent=currenciesList.length?currenciesList.join(', '):"N/A";
     countryCurrencies.appendChild(countryCurrenciesLabel);
     countryCurrencies.appendChild(countryCurrenciesValue);
 
@@ -121,7 +122,9 @@ async function renderDetailedView(data){
     const countryLanguagesLabel = document.createElement("strong");
     countryLanguagesLabel.innerText = "Languages: ";
     const countryLanguagesValue = document.createElement("span");
-    countryLanguagesValue.textContent = data.languages[Object.keys(data.languages)[0]];
+    const languagesList = [];
+    Object.keys(data.languages||{}).forEach(key => {  languagesList.push(data.languages[key])});
+    countryLanguagesValue.textContent = languagesList.length?languagesList.join(', '):"N/A";
     countryLanguages.appendChild(countryLanguagesLabel);
     countryLanguages.appendChild(countryLanguagesValue);
 
