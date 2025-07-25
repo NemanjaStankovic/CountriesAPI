@@ -18,7 +18,6 @@ async function getCountryDetails(){
         if(url.get("alpha"))
         {
             urlParams=`alpha/${url.get(`alpha`)}`
-            console.log(urlParams);
         }
     }
     const data = await getCountryList(urlParams);

@@ -6,6 +6,7 @@ const nameFilter = document.querySelector(".nameFilter");
 const content = document.querySelector(".content");
 const toggleDarkModeButton = document.querySelector(".toggleDarkMode");
 const headerText = document.querySelector(".headerText");
+const sortSelect = document.querySelector(".sort");
 
 var numberOfPages=0;
 var countries = [];
@@ -22,9 +23,17 @@ function renderCountries(value){
     countyView.classList.add("countryView");
     const nfObject = new Intl.NumberFormat('en-US')    
     countyView.innerHTML="";
-    filteredData = countries.filter(country => country.name.common.toLowerCase().includes(nameFilterValue));
+    if(value==0)
+    {
+        filteredData = countries.filter(country => country.name.common.toLowerCase().includes(nameFilterValue));
+        sortFilteredArray();
+    }
+    if(value==-2)
+    {
+        sortFilteredArray();
+    }
     numberOfPages = Math.ceil(filteredData.length/24);
-    changePageNumber(value);
+    value==-2?changePageNumber(0):changePageNumber(value);
     let i = 24*(page-1);
 
     while(i<filteredData.length && i<24*page)
@@ -115,7 +124,23 @@ function changePageNumberUI(){
 function returnToHomePage(){
     nameFilter.value="";
     regionSelect.value="all";
+    sortSelect.value="none";
     fetchData();
+}
+
+function sort(){
+    renderCountries(-2);
+}
+function sortFilteredArray(){
+    const sortBy = sortSelect.value;
+    switch(sortBy){
+        case "name":
+            filteredData.sort((a,b)=>a["name"]["common"].localeCompare(b["name"]["common"]));
+            break;
+        case "population":
+            filteredData.sort((a,b)=>b["population"] - a["population"]);
+            break;
+    }
 }
 
 window.addEventListener("pageshow", fetchData);
@@ -124,3 +149,4 @@ nameFilter.addEventListener("input", fetchData);
 toggleDarkModeButton.addEventListener("click", toggleDarkMode);
 document.addEventListener("DOMContentLoaded", checkDarkMode);
 headerText.addEventListener("click", returnToHomePage);
+sortSelect.addEventListener("change", sort);

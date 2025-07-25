@@ -12,7 +12,8 @@
     <div class="content">
       <div class="filterElements">
         <input name="nameFilter" class="nameFilter" placeholder="Search for a country...">
-        <select name="regions" class="regions">
+        <div class="dropdownElements">
+          <select name="regions" class="regions">
             <option value="all" selected>All</option>
             <option value="region/africa">Africa</option>
             <option value="region/america">America</option>
@@ -20,7 +21,14 @@
             <option value="region/europe">Europe</option>
             <option value="region/oceania">Oceania</option>
             <option value="region/antarctic">Antarctic</option>
-        </select>
+          </select>
+          <select name="sort" class="regions sort">
+            <option value="none" selected>None</option>
+            <option value="name">Name</option>
+            <option value="population">Population</option>
+          </select>
+        </div>
+        
       </div>
     </div>
     <script type="module" src="js/fetchData.js"></script>
