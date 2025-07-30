@@ -1,5 +1,5 @@
-import { CountryDetails, CountryMain } from "./countryTypes.js";
-const content: HTMLElement | null = document.querySelector(".content");
+import { CountryDetails, CountryMain } from './countryTypes.js';
+const content: HTMLElement | null = document.querySelector('.content');
 
 export async function getCountriesByRegion(
   region: string
@@ -8,7 +8,7 @@ export async function getCountriesByRegion(
     const response = await fetch(
       `https://restcountries.com/v3.1/${region}?fields=name,population,capital,region,flags`
     );
-    if (!response.ok) throw new Error("Failed to fetch data");
+    if (!response.ok) throw new Error('Failed to fetch data');
     return response.json();
   } catch (error) {
     console.log(error);
@@ -19,15 +19,15 @@ export async function getCountriesByRegion(
 export async function getBorderCountries(
   countryBorders: string[]
 ): Promise<string[]> {
-  const loading: HTMLElement = document.createElement("div");
-  loading.classList.add("loading-spinner");
+  const loading: HTMLElement = document.createElement('div');
+  loading.classList.add('loading-spinner');
   content?.appendChild(loading);
   try {
     const requests = countryBorders.map((border) =>
       fetch(`https://restcountries.com/v3.1/alpha/${border}?fields=name`)
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Failed to fetch data");
+            throw new Error('Failed to fetch data');
           }
           return response.json();
         })
@@ -49,7 +49,7 @@ export async function getCountryList(
     const response = await fetch(
       `https://restcountries.com/v3.1/${urlParams}?fullText=true`
     );
-    if (!response.ok) throw new Error("Failed to fetch data");
+    if (!response.ok) throw new Error('Failed to fetch data');
     return await response.json();
   } catch (error) {
     console.log(error);
