@@ -1,26 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@800&display=swap"
+      rel="stylesheet"
+    />
     <title>Countries API</title>
   </head>
   <body>
     <main-header></main-header>
     <div class="content">
       <div class="filterElements">
-        <input name="nameFilter" class="nameFilter" placeholder="Search for a country...">
+        <input
+          name="nameFilter"
+          class="nameFilter"
+          placeholder="Search for a country..."
+        />
         <div class="dropdownElements">
           <select name="regions" class="regions">
             <option value="all" selected>All</option>
             <option value="region/africa">Africa</option>
             <option value="region/america">America</option>
+            <option value="region/antarctic">Antarctic</option>
             <option value="region/asia">Asia</option>
             <option value="region/europe">Europe</option>
             <option value="region/oceania">Oceania</option>
-            <option value="region/antarctic">Antarctic</option>
           </select>
           <select name="sort" class="regions sort">
             <option value="none" selected>None</option>
@@ -28,12 +35,11 @@
             <option value="population">Population</option>
           </select>
         </div>
-        
       </div>
     </div>
-    <script type="module" src="js/fetchData.js"></script>
-    <script type="module" src="js/header.js"></script>
-    <script type="module" src="js/script.js"></script>
-    <script type="module" src="js/darkMode.js"></script>
+    <script type="module" src="built/fetchData.js"></script>
+    <script type="module" src="built/header.js"></script>
+    <script type="module" src="built/script.js"></script>
+    <script type="module" src="built/darkMode.js"></script>
   </body>
 </html>
