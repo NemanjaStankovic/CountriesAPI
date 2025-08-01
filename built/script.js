@@ -7,42 +7,42 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { toggleDarkMode, checkDarkMode } from "./darkMode.js";
-import { getCountriesByRegion } from "./fetchData.js";
-const countyView = document.createElement("div");
-const regionSelect = document.querySelector(".regions");
-const nameFilter = document.querySelector(".nameFilter");
-const content = document.querySelector(".content");
-const toggleDarkModeButton = document.querySelector(".toggleDarkMode");
-const headerText = document.querySelector(".headerText");
-const sortSelect = document.querySelector(".sort");
+import { toggleDarkMode, checkDarkMode } from './darkMode.js';
+import { getCountriesByRegion } from './fetchData.js';
+const countyView = document.createElement('div');
+const regionSelect = document.querySelector('.regions');
+const nameFilter = document.querySelector('.nameFilter');
+const content = document.querySelector('.content');
+const toggleDarkModeButton = document.querySelector('.toggleDarkMode');
+const headerText = document.querySelector('.headerText');
+const sortSelect = document.querySelector('.sort');
 var numberOfPages = 0;
 var countries = [];
 var filteredData = [];
 var page = 1;
 var Operation;
 (function (Operation) {
-    Operation["resetPage"] = "resetPage";
-    Operation["sortData"] = "sortData";
-    Operation["nextPage"] = "nextPage";
-    Operation["prevPage"] = "prevPage";
+    Operation["RESET_PAGE"] = "resetPage";
+    Operation["SORT_DATA"] = "sortData";
+    Operation["NEXT_PAGE"] = "nextPage";
+    Operation["PREV_PAGE"] = "prevPage";
 })(Operation || (Operation = {}));
 function fetchData() {
     return __awaiter(this, void 0, void 0, function* () {
-        const regionFilterValue = (regionSelect === null || regionSelect === void 0 ? void 0 : regionSelect.value) || "";
+        const regionFilterValue = (regionSelect === null || regionSelect === void 0 ? void 0 : regionSelect.value) || '';
         countries = yield getCountriesByRegion(regionFilterValue);
-        renderCountries(Operation.resetPage);
+        renderCountries(Operation.RESET_PAGE);
     });
 }
 function renderCountries(value) {
-    const nameFilterValue = (nameFilter === null || nameFilter === void 0 ? void 0 : nameFilter.value.toLowerCase()) || "";
-    countyView.classList.add("countryView");
-    countyView.innerHTML = "";
-    if (value == Operation.resetPage) {
+    const nameFilterValue = (nameFilter === null || nameFilter === void 0 ? void 0 : nameFilter.value.toLowerCase()) || '';
+    countyView.classList.add('countryView');
+    countyView.innerHTML = '';
+    if (value == Operation.RESET_PAGE) {
         filteredData = countries.filter((country) => country.name.common.toLowerCase().includes(nameFilterValue));
         sortFilteredArray();
     }
-    if (value == Operation.sortData) {
+    if (value == Operation.SORT_DATA) {
         sortFilteredArray();
     }
     numberOfPages = Math.ceil(filteredData.length / 24);
@@ -54,11 +54,11 @@ function renderCountryView() {
     if (!content)
         return;
     let i = 24 * (page - 1);
-    const nfObject = new Intl.NumberFormat("en-US");
+    const nfObject = new Intl.NumberFormat('en-US');
     while (i < filteredData.length && i < 24 * page) {
         let country = filteredData[i];
-        const countryCard = document.createElement("div");
-        countryCard.classList.add("card");
+        const countryCard = document.createElement('div');
+        countryCard.classList.add('card');
         countryCard.innerHTML =
             `
             <img class="imageHomeView" src="${(_a = country === null || country === void 0 ? void 0 : country.flags) === null || _a === void 0 ? void 0 : _a.svg}" alt="${(_b = country === null || country === void 0 ? void 0 : country.flags) === null || _b === void 0 ? void 0 : _b.alt}">
@@ -70,7 +70,7 @@ function renderCountryView() {
                     <div style="padding-block:0px"><strong>Capital: </strong>${country === null || country === void 0 ? void 0 : country.capital}</div>
                 </div>
             </div>` || ``;
-        countryCard.addEventListener("click", () => {
+        countryCard.addEventListener('click', () => {
             var _a;
             window.location.href = `country.html?name=${(_a = country === null || country === void 0 ? void 0 : country.name) === null || _a === void 0 ? void 0 : _a.official}`;
         });
@@ -78,19 +78,19 @@ function renderCountryView() {
         i++;
     }
     content.appendChild(countyView);
-    const pageController = document.createElement("div");
+    const pageController = document.createElement('div');
     pageController.innerHTML = `
         <button class="previousPage" disabled></button>
         <div class="pageNumber">${page}</div>
         <button class="nextPage"></button>`;
-    pageController.classList.add("pageController");
-    const prevButton = pageController.querySelector(".previousPage");
-    const nextButton = pageController.querySelector(".nextPage");
+    pageController.classList.add('pageController');
+    const prevButton = pageController.querySelector('.previousPage');
+    const nextButton = pageController.querySelector('.nextPage');
     prevButton &&
-        (prevButton.onclick = () => renderCountries(Operation.prevPage));
+        (prevButton.onclick = () => renderCountries(Operation.PREV_PAGE));
     nextButton &&
-        (nextButton.onclick = () => renderCountries(Operation.nextPage));
-    const pageControllerExists = document.querySelector(".pageController");
+        (nextButton.onclick = () => renderCountries(Operation.NEXT_PAGE));
+    const pageControllerExists = document.querySelector('.pageController');
     if (pageControllerExists) {
         pageControllerExists.remove();
     }
@@ -99,73 +99,73 @@ function renderCountryView() {
 }
 function changePageNumber(value) {
     var nextPage = 0;
-    if (value == Operation.resetPage || value == Operation.sortData) {
+    if (value == Operation.RESET_PAGE || value == Operation.SORT_DATA) {
         page = 1;
     }
-    if (value == Operation.nextPage) {
+    if (value == Operation.NEXT_PAGE) {
         nextPage = page + 1;
     }
-    if (value == Operation.prevPage) {
+    if (value == Operation.PREV_PAGE) {
         nextPage = page - 1;
     }
     if (nextPage > 0 &&
         nextPage <= numberOfPages &&
-        value != Operation.resetPage &&
-        value != Operation.sortData) {
+        value != Operation.RESET_PAGE &&
+        value != Operation.SORT_DATA) {
         page = nextPage;
     }
 }
 function changePageNumberUI() {
-    let buttonToChange = document.querySelector(".previousPage");
+    let buttonToChange = document.querySelector('.previousPage');
     if (buttonToChange) {
         if (page == 1) {
             buttonToChange.disabled = true;
-            buttonToChange.style.visibility = "hidden";
+            buttonToChange.style.visibility = 'hidden';
         }
         else {
             buttonToChange.disabled = false;
-            buttonToChange.style.visibility = "visible";
+            buttonToChange.style.visibility = 'visible';
         }
     }
-    buttonToChange = document.querySelector(".nextPage");
+    buttonToChange = document.querySelector('.nextPage');
     if (buttonToChange) {
         if (page == numberOfPages || numberOfPages == 0) {
             buttonToChange.disabled = true;
-            buttonToChange.style.visibility = "hidden";
+            buttonToChange.style.visibility = 'hidden';
         }
         else {
             buttonToChange.disabled = false;
-            buttonToChange.style.visibility = "visible";
+            buttonToChange.style.visibility = 'visible';
         }
         if (page == 1 && numberOfPages <= 1) {
-            const pageNumber = document.querySelector(".pageNumber");
-            pageNumber && (pageNumber.style.visibility = "hidden");
+            const pageNumber = document.querySelector('.pageNumber');
+            pageNumber && (pageNumber.style.visibility = 'hidden');
         }
     }
-    const pageNumberLabel = document.querySelector(".pageNumber");
+    const pageNumberLabel = document.querySelector('.pageNumber');
     pageNumberLabel && (pageNumberLabel.textContent = page.toString());
 }
 function returnToHomePage() {
-    nameFilter && (nameFilter.value = "");
-    regionSelect && (regionSelect.value = "all");
-    sortSelect && (sortSelect.value = "none");
+    nameFilter && (nameFilter.value = '');
+    regionSelect && (regionSelect.value = 'all');
+    sortSelect && (sortSelect.value = 'none');
     fetchData();
 }
 function sortFilteredArray() {
     const sortBy = sortSelect === null || sortSelect === void 0 ? void 0 : sortSelect.value;
     switch (sortBy) {
-        case "name":
-            filteredData.sort((a, b) => a["name"]["common"].localeCompare(b["name"]["common"]));
+        case 'name':
+            filteredData.sort((a, b) => a['name']['common'].localeCompare(b['name']['common']));
             break;
-        case "population":
-            filteredData.sort((a, b) => b["population"] - a["population"]);
+        case 'population':
+            filteredData.sort((a, b) => b['population'] - a['population']);
             break;
     }
 }
-window.addEventListener("pageshow", fetchData);
-regionSelect === null || regionSelect === void 0 ? void 0 : regionSelect.addEventListener("change", fetchData);
-nameFilter === null || nameFilter === void 0 ? void 0 : nameFilter.addEventListener("input", fetchData);
-toggleDarkModeButton === null || toggleDarkModeButton === void 0 ? void 0 : toggleDarkModeButton.addEventListener("click", toggleDarkMode);
-document === null || document === void 0 ? void 0 : document.addEventListener("DOMContentLoaded", checkDarkMode);
-headerText === null || headerText === void 0 ? void 0 : headerText.addEventListener("click", returnToHomePage);
-sortSelect === null || sortSelect === void 0 ? void 0 : sortSelect.addEventListener("change", () => renderCountries(Operation.sortData));
+window.addEventListener('pageshow', fetchData);
+regionSelect === null || regionSelect === void 0 ? void 0 : regionSelect.addEventListener('change', fetchData);
+nameFilter === null || nameFilter === void 0 ? void 0 : nameFilter.addEventListener('input', fetchData);
+toggleDarkModeButton === null || toggleDarkModeButton === void 0 ? void 0 : toggleDarkModeButton.addEventListener('click', toggleDarkMode);
+document === null || document === void 0 ? void 0 : document.addEventListener('DOMContentLoaded', checkDarkMode);
+headerText === null || headerText === void 0 ? void 0 : headerText.addEventListener('click', returnToHomePage);
+sortSelect === null || sortSelect === void 0 ? void 0 : sortSelect.addEventListener('change', () => renderCountries(Operation.SORT_DATA));

@@ -7,13 +7,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const content = document.querySelector(".content");
+const content = document.querySelector('.content');
 export function getCountriesByRegion(region) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield fetch(`https://restcountries.com/v3.1/${region}?fields=name,population,capital,region,flags`);
             if (!response.ok)
-                throw new Error("Failed to fetch data");
+                throw new Error('Failed to fetch data');
             return response.json();
         }
         catch (error) {
@@ -22,24 +22,54 @@ export function getCountriesByRegion(region) {
         }
     });
 }
+// export async function getBorderCountries(
+//   countryBorders: string[]
+// ): Promise<string[]> {
+//   const loading: HTMLElement = document.createElement('div');
+//   const requests: string[] = [];
+//   loading.classList.add('loading-spinner');
+//   content?.appendChild(loading);
+//   try {
+//     countryBorders.forEach((border) =>
+//       fetch(`https://restcountries.com/v3.1/alpha/${border}?fields=name`)
+//         .then((response) => {
+//           if (!response.ok) {
+//             throw new Error('Failed to fetch data');
+//           }
+//           return response.json();
+//         })
+//         .then((data) => requests.push(data.name.common))
+//         .catch((error) => {
+//           console.error(error);
+//         })
+//     );
+//     console.log(requests);
+//     return requests;
+//   } finally {
+//     content?.removeChild(loading);
+//   }
+// }
 export function getBorderCountries(countryBorders) {
     return __awaiter(this, void 0, void 0, function* () {
-        const loading = document.createElement("div");
-        loading.classList.add("loading-spinner");
+        const loading = document.createElement('div');
+        const requests = [];
+        loading.classList.add('loading-spinner');
         content === null || content === void 0 ? void 0 : content.appendChild(loading);
         try {
-            const requests = countryBorders.map((border) => fetch(`https://restcountries.com/v3.1/alpha/${border}?fields=name`)
-                .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to fetch data");
+            for (const border of countryBorders) {
+                try {
+                    const response = yield fetch(`https://restcountries.com/v3.1/alpha/${border}?fields=name`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch data');
+                    }
+                    const data = yield response.json();
+                    requests.push(data.name.common);
                 }
-                return response.json();
-            })
-                .then((data) => data.name.common)
-                .catch((error) => {
-                console.error(error);
-            }));
-            return yield Promise.all(requests);
+                catch (error) {
+                    console.error(error);
+                }
+            }
+            return requests;
         }
         finally {
             content === null || content === void 0 ? void 0 : content.removeChild(loading);
@@ -51,7 +81,7 @@ export function getCountryList(urlParams) {
         try {
             const response = yield fetch(`https://restcountries.com/v3.1/${urlParams}?fullText=true`);
             if (!response.ok)
-                throw new Error("Failed to fetch data");
+                throw new Error('Failed to fetch data');
             return yield response.json();
         }
         catch (error) {

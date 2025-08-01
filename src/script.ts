@@ -15,28 +15,28 @@ var countries: CountryMain[] = [];
 var filteredData: CountryMain[] = [];
 var page: number = 1;
 enum Operation {
-  resetPage = 'resetPage',
-  sortData = 'sortData',
-  nextPage = 'nextPage',
-  prevPage = 'prevPage',
+  RESET_PAGE = 'resetPage',
+  SORT_DATA = 'sortData',
+  NEXT_PAGE = 'nextPage',
+  PREV_PAGE = 'prevPage',
 }
 
 async function fetchData() {
   const regionFilterValue: string = regionSelect?.value || '';
   countries = await getCountriesByRegion(regionFilterValue);
-  renderCountries(Operation.resetPage);
+  renderCountries(Operation.RESET_PAGE);
 }
 function renderCountries(value: Operation) {
   const nameFilterValue: string = nameFilter?.value.toLowerCase() || '';
   countyView.classList.add('countryView');
   countyView.innerHTML = '';
-  if (value == Operation.resetPage) {
+  if (value == Operation.RESET_PAGE) {
     filteredData = countries.filter((country) =>
       country.name.common.toLowerCase().includes(nameFilterValue)
     );
     sortFilteredArray();
   }
-  if (value == Operation.sortData) {
+  if (value == Operation.SORT_DATA) {
     sortFilteredArray();
   }
   numberOfPages = Math.ceil(filteredData.length / 24);
@@ -90,9 +90,9 @@ function renderCountryView() {
   const nextButton: HTMLButtonElement | null =
     pageController.querySelector('.nextPage');
   prevButton &&
-    (prevButton.onclick = () => renderCountries(Operation.prevPage));
+    (prevButton.onclick = () => renderCountries(Operation.PREV_PAGE));
   nextButton &&
-    (nextButton.onclick = () => renderCountries(Operation.nextPage));
+    (nextButton.onclick = () => renderCountries(Operation.NEXT_PAGE));
 
   const pageControllerExists: HTMLElement | null =
     document.querySelector('.pageController');
@@ -105,20 +105,20 @@ function renderCountryView() {
 
 function changePageNumber(value: Operation) {
   var nextPage = 0;
-  if (value == Operation.resetPage || value == Operation.sortData) {
+  if (value == Operation.RESET_PAGE || value == Operation.SORT_DATA) {
     page = 1;
   }
-  if (value == Operation.nextPage) {
+  if (value == Operation.NEXT_PAGE) {
     nextPage = page + 1;
   }
-  if (value == Operation.prevPage) {
+  if (value == Operation.PREV_PAGE) {
     nextPage = page - 1;
   }
   if (
     nextPage > 0 &&
     nextPage <= numberOfPages &&
-    value != Operation.resetPage &&
-    value != Operation.sortData
+    value != Operation.RESET_PAGE &&
+    value != Operation.SORT_DATA
   ) {
     page = nextPage;
   }
@@ -184,5 +184,5 @@ toggleDarkModeButton?.addEventListener('click', toggleDarkMode);
 document?.addEventListener('DOMContentLoaded', checkDarkMode);
 headerText?.addEventListener('click', returnToHomePage);
 sortSelect?.addEventListener('change', () =>
-  renderCountries(Operation.sortData)
+  renderCountries(Operation.SORT_DATA)
 );

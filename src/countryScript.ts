@@ -28,6 +28,7 @@ function renderBackButton() {
   content.appendChild(backButton);
 }
 async function renderDetailedView(data: CountryDetails) {
+  console.log('izvrsava');
   if (!content) return;
   const nfObject = new Intl.NumberFormat('en-US');
   const detailedView = document.createElement('div');
@@ -102,7 +103,7 @@ async function renderDetailedView(data: CountryDetails) {
   const countryTopLvlDomValue = document.createElement('span');
   var tldList: string[] = [];
   tldList = data.tld;
-  countryTopLvlDomValue.textContent = tldList.length
+  countryTopLvlDomValue.textContent = tldList?.length
     ? tldList.join(', ')
     : 'N/A';
   countryTopLvlDom.appendChild(countryTopLvlDomLabel);
@@ -113,7 +114,7 @@ async function renderDetailedView(data: CountryDetails) {
   countryCurrenciesLabel.innerText = 'Currencies: ';
   const countryCurrenciesValue = document.createElement('span');
   const currenciesList: string[] = [];
-  Object.entries(data.currencies || []).forEach(([code, currency]) => {
+  Object.entries(data.currencies || []).forEach(([_code, currency]) => {
     currenciesList.push(currency.name);
   });
   countryCurrenciesValue.textContent = currenciesList.length
@@ -133,6 +134,7 @@ async function renderDetailedView(data: CountryDetails) {
   countryLanguagesValue.textContent = languagesList.length
     ? languagesList.join(', ')
     : 'N/A';
+
   countryLanguages.appendChild(countryLanguagesLabel);
   countryLanguages.appendChild(countryLanguagesValue);
 
@@ -155,7 +157,7 @@ async function renderDetailedView(data: CountryDetails) {
 
   const countryDetailsBorders = document.createElement('div');
   countryDetailsBorders.classList.add('countryDetailsBorders');
-
+  console.log(data.borders);
   const countryBorders = data.borders ?? null;
   if (countryBorders) {
     let countryNames: string[] = [];
@@ -164,8 +166,8 @@ async function renderDetailedView(data: CountryDetails) {
     countryBordersText.innerText = 'Border Countries: ';
     countryBordersLabel.appendChild(countryBordersText);
     countryDetailsBorders.appendChild(countryBordersLabel);
-
     countryNames = await getBorderCountries(countryBorders);
+    console.log('wddw', countryNames);
     countryNames.map((border: string) => {
       const borderButton = document.createElement(`button`);
 

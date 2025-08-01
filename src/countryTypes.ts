@@ -1,17 +1,7 @@
-export type CountryMain = {
+export type CountryMain = CountryName & {
   flags: {
     svg: string;
     alt: string;
-  };
-  name: {
-    official: string;
-    common: string;
-    nativeName?: {
-      [languageCode: string]: {
-        official: string;
-        common: string;
-      };
-    };
   };
   population: number;
   region: string;
@@ -30,4 +20,17 @@ export type CountryDetails = CountryMain & {
     [languageCode: string]: string;
   };
   borders: string[];
+};
+
+export type CountryName = {
+  name: {
+    official: string;
+    common: string;
+    nativeName?: {
+      [languageCode: string]: {
+        official: string;
+        common: string;
+      };
+    };
+  };
 };
