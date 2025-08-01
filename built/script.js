@@ -19,6 +19,7 @@ const sortSelect = document.querySelector('.sort');
 var numberOfPages = 0;
 var countries = [];
 var filteredData = [];
+var oldInput = '';
 var page = 1;
 var Operation;
 (function (Operation) {
@@ -30,7 +31,10 @@ var Operation;
 function fetchData() {
     return __awaiter(this, void 0, void 0, function* () {
         const regionFilterValue = (regionSelect === null || regionSelect === void 0 ? void 0 : regionSelect.value) || '';
-        countries = yield getCountriesByRegion(regionFilterValue);
+        if (oldInput != regionFilterValue) {
+            countries = yield getCountriesByRegion(regionFilterValue);
+            oldInput = regionFilterValue;
+        }
         renderCountries(Operation.RESET_PAGE);
     });
 }
@@ -162,9 +166,19 @@ function sortFilteredArray() {
             break;
     }
 }
+function debounce(func) {
+    let timer;
+    return () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            return func();
+        }, 800);
+    };
+}
+const debounceFunction = debounce(fetchData);
 window.addEventListener('pageshow', fetchData);
 regionSelect === null || regionSelect === void 0 ? void 0 : regionSelect.addEventListener('change', fetchData);
-nameFilter === null || nameFilter === void 0 ? void 0 : nameFilter.addEventListener('input', fetchData);
+nameFilter === null || nameFilter === void 0 ? void 0 : nameFilter.addEventListener('input', debounceFunction);
 toggleDarkModeButton === null || toggleDarkModeButton === void 0 ? void 0 : toggleDarkModeButton.addEventListener('click', toggleDarkMode);
 document === null || document === void 0 ? void 0 : document.addEventListener('DOMContentLoaded', checkDarkMode);
 headerText === null || headerText === void 0 ? void 0 : headerText.addEventListener('click', returnToHomePage);

@@ -22,33 +22,6 @@ export function getCountriesByRegion(region) {
         }
     });
 }
-// export async function getBorderCountries(
-//   countryBorders: string[]
-// ): Promise<string[]> {
-//   const loading: HTMLElement = document.createElement('div');
-//   const requests: string[] = [];
-//   loading.classList.add('loading-spinner');
-//   content?.appendChild(loading);
-//   try {
-//     countryBorders.forEach((border) =>
-//       fetch(`https://restcountries.com/v3.1/alpha/${border}?fields=name`)
-//         .then((response) => {
-//           if (!response.ok) {
-//             throw new Error('Failed to fetch data');
-//           }
-//           return response.json();
-//         })
-//         .then((data) => requests.push(data.name.common))
-//         .catch((error) => {
-//           console.error(error);
-//         })
-//     );
-//     console.log(requests);
-//     return requests;
-//   } finally {
-//     content?.removeChild(loading);
-//   }
-// }
 export function getBorderCountries(countryBorders) {
     return __awaiter(this, void 0, void 0, function* () {
         const loading = document.createElement('div');
@@ -62,7 +35,7 @@ export function getBorderCountries(countryBorders) {
                     if (!response.ok) {
                         throw new Error('Failed to fetch data');
                     }
-                    const data = yield response.json();
+                    const data = (yield response.json());
                     requests.push(data.name.common);
                 }
                 catch (error) {
@@ -82,7 +55,7 @@ export function getCountryList(urlParams) {
             const response = yield fetch(`https://restcountries.com/v3.1/${urlParams}?fullText=true`);
             if (!response.ok)
                 throw new Error('Failed to fetch data');
-            return yield response.json();
+            return (yield response.json());
         }
         catch (error) {
             console.log(error);

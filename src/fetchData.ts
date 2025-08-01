@@ -9,40 +9,12 @@ export async function getCountriesByRegion(
       `https://restcountries.com/v3.1/${region}?fields=name,population,capital,region,flags`
     );
     if (!response.ok) throw new Error('Failed to fetch data');
-    return response.json();
+    return response.json() as Promise<CountryMain[]>;
   } catch (error) {
     console.log(error);
     return [];
   }
 }
-
-// export async function getBorderCountries(
-//   countryBorders: string[]
-// ): Promise<string[]> {
-//   const loading: HTMLElement = document.createElement('div');
-//   const requests: string[] = [];
-//   loading.classList.add('loading-spinner');
-//   content?.appendChild(loading);
-//   try {
-//     countryBorders.forEach((border) =>
-//       fetch(`https://restcountries.com/v3.1/alpha/${border}?fields=name`)
-//         .then((response) => {
-//           if (!response.ok) {
-//             throw new Error('Failed to fetch data');
-//           }
-//           return response.json();
-//         })
-//         .then((data) => requests.push(data.name.common))
-//         .catch((error) => {
-//           console.error(error);
-//         })
-//     );
-//     console.log(requests);
-//     return requests;
-//   } finally {
-//     content?.removeChild(loading);
-//   }
-// }
 
 export async function getBorderCountries(
   countryBorders: string[]
@@ -61,7 +33,7 @@ export async function getBorderCountries(
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
-        const data: CountryName = await response.json();
+        const data: CountryName = (await response.json()) as CountryName;
         requests.push(data.name.common);
       } catch (error) {
         console.error(error);
@@ -81,7 +53,7 @@ export async function getCountryList(
       `https://restcountries.com/v3.1/${urlParams}?fullText=true`
     );
     if (!response.ok) throw new Error('Failed to fetch data');
-    return await response.json();
+    return (await response.json()) as Promise<CountryDetails[]>;
   } catch (error) {
     console.log(error);
     return [];

@@ -149,7 +149,6 @@ function renderDetailedView(data) {
         countryDetailsView.appendChild(countryDetailsViewColumns);
         const countryDetailsBorders = document.createElement('div');
         countryDetailsBorders.classList.add('countryDetailsBorders');
-        console.log(data.borders);
         const countryBorders = (_j = data.borders) !== null && _j !== void 0 ? _j : null;
         if (countryBorders) {
             let countryNames = [];

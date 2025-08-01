@@ -157,7 +157,6 @@ async function renderDetailedView(data: CountryDetails) {
 
   const countryDetailsBorders = document.createElement('div');
   countryDetailsBorders.classList.add('countryDetailsBorders');
-  console.log(data.borders);
   const countryBorders = data.borders ?? null;
   if (countryBorders) {
     let countryNames: string[] = [];

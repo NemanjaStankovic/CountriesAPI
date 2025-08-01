@@ -13,6 +13,7 @@ const sortSelect: HTMLSelectElement | null = document.querySelector('.sort');
 var numberOfPages: number = 0;
 var countries: CountryMain[] = [];
 var filteredData: CountryMain[] = [];
+var oldInput = '';
 var page: number = 1;
 enum Operation {
   RESET_PAGE = 'resetPage',
@@ -23,7 +24,11 @@ enum Operation {
 
 async function fetchData() {
   const regionFilterValue: string = regionSelect?.value || '';
-  countries = await getCountriesByRegion(regionFilterValue);
+  if (oldInput != regionFilterValue) {
+    countries = await getCountriesByRegion(regionFilterValue);
+    oldInput = regionFilterValue;
+  }
+
   renderCountries(Operation.RESET_PAGE);
 }
 function renderCountries(value: Operation) {
@@ -177,9 +182,21 @@ function sortFilteredArray() {
   }
 }
 
+function debounce(func: Function) {
+  let timer: ReturnType<typeof setTimeout>;
+  return () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      return func();
+    }, 800);
+  };
+}
+
+const debounceFunction = debounce(fetchData);
+
 window.addEventListener('pageshow', fetchData);
 regionSelect?.addEventListener('change', fetchData);
-nameFilter?.addEventListener('input', fetchData);
+nameFilter?.addEventListener('input', debounceFunction);
 toggleDarkModeButton?.addEventListener('click', toggleDarkMode);
 document?.addEventListener('DOMContentLoaded', checkDarkMode);
 headerText?.addEventListener('click', returnToHomePage);
